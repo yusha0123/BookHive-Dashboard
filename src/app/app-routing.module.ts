@@ -5,6 +5,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { RootComponent } from './pages/root/root.component';
 import { UsersComponent } from './pages/users/users.component';
 import { ProductsComponent } from './pages/products/products.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
         title: 'BookHive-Products',
       },
     ],
+  },
+  {
+    path: '**',
+    title: 'Page Not Found',
+    component: NotFoundComponent,
   },
 ];
 

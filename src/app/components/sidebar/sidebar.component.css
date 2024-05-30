@@ -1,3 +1,0 @@
-.sidebar-item {
-  @apply relative flex items-center py-2 gap-2 text-lg px-3 my-1 font-medium rounded-md cursor-pointer transition-colors focus:outline-none hover:bg-gray-300 text-gray-600;
-}

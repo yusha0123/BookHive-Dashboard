@@ -1,7 +1,7 @@
 <nav
   class="top-0 inset-x-0 bg-gray-100 py-2 px-3 lg:px-6 flex md:justify-end justify-between sticky border-b"
 >
-  <div class="md:hidden">
+  <div class="md:hidden" (click)="toggleNav()">
     <button mat-icon-button>
       <fa-icon [icon]="faBars"></fa-icon>
     </button>
@@ -11,3 +11,48 @@
     <fa-icon [icon]="faRightFromBracket"></fa-icon>
   </button>
 </nav>
+
+<ng-container>
+  <!-- Drawer backdrop -->
+  <div
+    *ngIf="isOpen"
+    class="fixed inset-0 md:hidden bg-black/50 z-40 transition-all duration-500"
+    (click)="toggleNav()"
+  ></div>
+  <!-- Drawer -->
+  <section
+    class="inset-y-0 left-0 w-[75%] sm:w-[60%] min-w-60 max-w-[300px] md:hidden bg-gray-100 rounded-l-md fixed z-[50] ease-in-out duration-500"
+    [ngClass]="{ 'translate-x-0': isOpen, '-translate-x-full': !isOpen }"
+  >
+    <div class="w-full flex justify-end p-2 sm:p-3 bg-inherit">
+      <button
+        (click)="toggleNav()"
+        class="inline-flex items-center justify-center w-6 h-6 text-red-600 transition-colors duration-150 rounded-full focus:shadow-outline"
+      >
+        <fa-icon [icon]="faXmark" />
+      </button>
+    </div>
+    <div class="w-full bg-gray-100 h-full">
+      <div class="flex flex-col gap-2 items-center p-3">
+        <img src="/assets/admin.svg" alt="admin-icon" class="size-16 block" />
+        <h3 class="text-xl md:text-2xl font-semibold">BookHive Admin</h3>
+      </div>
+      <div class="flex-1 px-2 sm:px-4">
+        <ng-container *ngFor="let link of navLinks">
+          <button
+            (click)="navigateUser(link.route)"
+            class="nav-item"
+            [ngClass]="{ '!bg-blue-500 !text-white': isLinkActive(link.route) }"
+          >
+            <fa-icon [icon]="link.icon" />
+            {{ link.label }}
+          </button>
+        </ng-container>
+        <button class="nav-item w-full">
+          <fa-icon [icon]="faArrowRightFromBracket"></fa-icon>
+          Logout
+        </button>
+      </div>
+    </div>
+  </section>
+</ng-container>
