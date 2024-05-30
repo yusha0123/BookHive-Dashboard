@@ -1,0 +1,26 @@
+<aside class="w-full bg-gray-100 h-full">
+  <div class="p-5">
+    <img
+      src="/assets/admin.svg"
+      alt="admin-icon"
+      class="size-16 block mx-auto"
+    />
+    <h3 class="text-2xl font-semibold text-center">BookHive Admin</h3>
+  </div>
+  <div class="flex-1 px-3">
+    <ng-container *ngFor="let link of navLinks">
+      <a
+        [routerLink]="link.route"
+        class="sidebar-item"
+        [ngClass]="{ '!bg-blue-500 !text-white': isLinkActive(link.route) }"
+      >
+        <fa-icon [icon]="link.icon" />
+        {{ link.label }}
+      </a>
+    </ng-container>
+    <button class="sidebar-item w-full">
+      <fa-icon [icon]="faArrowRightFromBracket"></fa-icon>
+      Logout
+    </button>
+  </div>
+</aside>
