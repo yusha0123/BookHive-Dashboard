@@ -1,24 +1,26 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './pages/login/login.component';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
 import { IconComponent } from './components/icon/icon.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ngxUiLoaderConfig } from './constants';
 import { LayoutComponent } from './layout/layout.component';
-import { UsersComponent } from './pages/users/users.component';
+import { LoginComponent } from './pages/login/login.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { RootComponent } from './pages/root/root.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { ngxUiLoaderConfig } from './constants';
+import { UsersComponent } from './pages/users/users.component';
 
 @NgModule({
   declarations: [
@@ -38,12 +40,16 @@ import { ngxUiLoaderConfig } from './constants';
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
-    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     BrowserAnimationsModule,
     MatCardModule,
     MatInputModule,
     MatButtonModule,
     FontAwesomeModule,
+    HttpClientModule,
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
