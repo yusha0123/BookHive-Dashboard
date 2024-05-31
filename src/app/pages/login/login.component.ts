@@ -35,7 +35,6 @@ export class LoginComponent {
   onSubmit(): void {
     const data: LoginFormData = this.loginForm.value;
     this.authService.login(data).subscribe({
-      next: () => {},
       error: () => this.loginForm.reset(),
     });
   }

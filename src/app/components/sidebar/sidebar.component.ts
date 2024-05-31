@@ -7,6 +7,7 @@ import {
   IconDefinition,
   faArrowRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,7 +19,7 @@ export class SidebarComponent {
   faBoxOpen = faBoxOpen;
   faArrowRightFromBracket = faArrowRightFromBracket;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   navLinks: { route: string; label: string; icon: IconDefinition }[] = [
     { route: '/', label: 'Dashboard', icon: faChartPie },
@@ -34,5 +35,9 @@ export class SidebarComponent {
       fragment: 'ignored',
     };
     return this.router.isActive(route, matchOptions);
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }

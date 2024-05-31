@@ -7,7 +7,7 @@
     </button>
   </div>
 
-  <button mat-icon-button>
+  <button mat-icon-button (click)="logout()">
     <fa-icon [icon]="faRightFromBracket"></fa-icon>
   </button>
 </nav>
@@ -50,7 +50,7 @@
             {{ link.label }}
           </button>
         </ng-container>
-        <button class="nav-item w-full">
+        <button class="nav-item w-full" (click)="logout()">
           <fa-icon [icon]="faArrowRightFromBracket"></fa-icon>
           Logout
         </button>

@@ -10,13 +10,18 @@ import {
   faArrowRightFromBracket,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
-  constructor(private renderer: Renderer2, private router: Router) {}
+  constructor(
+    private renderer: Renderer2,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   faRightFromBracket = faRightFromBracket;
   faBars = faBars;
@@ -55,5 +60,9 @@ export class NavbarComponent {
       fragment: 'ignored',
     };
     return this.router.isActive(route, matchOptions);
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }

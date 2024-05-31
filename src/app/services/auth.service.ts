@@ -57,6 +57,7 @@ export class AuthService {
 
   private handleSuccess(username: string, response: LoginResponse) {
     this.loggedUser = username;
+    this.router.navigate(['/']);
     localStorage.setItem(
       'token',
       JSON.stringify({
