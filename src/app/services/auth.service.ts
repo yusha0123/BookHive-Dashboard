@@ -13,6 +13,7 @@ import {
 } from 'rxjs';
 import { API_URL } from '../constants';
 import { LoginResponse } from '../interfaces';
+import { extractErrorMessage } from '../helpers';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +48,7 @@ export class AuthService {
       .pipe(
         tap((response) => this.handleSuccess(user.username, response)),
         catchError((error) => {
-          const errorMessage = this.extractErrorMessage(error);
+          const errorMessage = extractErrorMessage(error);
           this.toastr.error(errorMessage);
           return throwError(() => new Error(error));
         }),
@@ -81,15 +82,5 @@ export class AuthService {
     localStorage.removeItem('user');
     this.isAuthenticated.next(false);
     this.router.navigate(['/login']);
-  }
-
-  private extractErrorMessage(error: HttpErrorResponse): string {
-    if (error.error instanceof ErrorEvent) {
-      // Client-side or network error
-      return error.error.message;
-    } else {
-      // Server-side error
-      return error.error.message || 'An unknown error occurred!';
-    }
   }
 }
