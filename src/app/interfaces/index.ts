@@ -8,3 +8,13 @@ export interface LoginResponse {
   session_state: string;
   scope: string;
 }
+
+export interface Product {
+  _id?: string;
+  title: string;
+  coverUrl: string;
+  description: string;
+  price: number;
+  author: string;
+  genre: string;
+}

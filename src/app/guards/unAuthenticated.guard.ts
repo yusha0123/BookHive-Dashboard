@@ -5,13 +5,8 @@ import { AuthService } from '../services/auth.service';
 export const unAuthenticated: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-  let isAuthenticated;
 
-  authService.getAuthState().subscribe((value) => {
-    isAuthenticated = value;
-  });
-
-  if (isAuthenticated) {
+  if (authService.isLoggedIn()) {
     router.navigate(['/']);
     return false;
   }

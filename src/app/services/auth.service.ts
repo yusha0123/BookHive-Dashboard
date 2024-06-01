@@ -59,7 +59,7 @@ export class AuthService {
     this.loggedUser = username;
     this.router.navigate(['/']);
     localStorage.setItem(
-      'token',
+      'user',
       JSON.stringify({
         access_token: response.access_token,
         refresh_token: response.refresh_token,
@@ -73,8 +73,12 @@ export class AuthService {
     return this.isAuthenticated.asObservable();
   }
 
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('user');
+  }
+
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.isAuthenticated.next(false);
     this.router.navigate(['/login']);
   }
