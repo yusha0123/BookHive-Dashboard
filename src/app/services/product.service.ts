@@ -29,10 +29,6 @@ export class ProductService {
     private toastr: ToastrService
   ) {}
 
-  private refreshProductsSubject = new Subject<void>();
-
-  refreshProducts$ = this.refreshProductsSubject.asObservable();
-
   getProducts(): Observable<Product[]> {
     this.ngxLoader.start();
     return this.http.get<Product[]>(`${API_URL}/books`).pipe(
@@ -43,33 +39,30 @@ export class ProductService {
 
   createProduct(product: Product): Observable<Product> {
     this.ngxLoader.start();
+    console.log(product);
     return this.http.post<Product>(`${API_URL}/books`, product).pipe(
-      tap(() => this.refreshProductsSubject.next()),
+      tap(() => this.toastr.info('Product created successfully!')),
       catchError(this.handleError.bind(this)),
       finalize(() => this.ngxLoader.stop())
     );
   }
 
-  updateProduct(product: Product): Observable<Product> {
+  updateProduct(product: Product, id: string): Observable<Product> {
     this.ngxLoader.start();
-    return this.http
-      .put<Product>(`${API_URL}/books/${product._id}`, product)
-      .pipe(
-        tap(() => this.refreshProductsSubject.next()),
-        catchError(this.handleError.bind(this)),
-        finalize(() => this.ngxLoader.stop())
-      );
+    return this.http.put<Product>(`${API_URL}/books/${id}`, product).pipe(
+      tap(() => this.toastr.info('Product updated successfully!')),
+      catchError(this.handleError.bind(this)),
+      finalize(() => this.ngxLoader.stop())
+    );
   }
 
-  deleteProduct(product: Product): Observable<DeleteReponse> {
+  deleteProduct(id: string): Observable<DeleteReponse> {
     this.ngxLoader.start();
-    return this.http
-      .put<DeleteReponse>(`${API_URL}/books/${product._id}`, product)
-      .pipe(
-        tap(() => this.refreshProductsSubject.next()),
-        catchError(this.handleError.bind(this)),
-        finalize(() => this.ngxLoader.stop())
-      );
+    return this.http.delete<DeleteReponse>(`${API_URL}/books/${id}`).pipe(
+      tap(() => this.toastr.info('Product deleted successfully!')),
+      catchError(this.handleError.bind(this)),
+      finalize(() => this.ngxLoader.stop())
+    );
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

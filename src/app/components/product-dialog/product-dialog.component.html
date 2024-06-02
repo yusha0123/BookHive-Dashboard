@@ -1,0 +1,75 @@
+<h2 mat-dialog-title class="text-center">
+  {{ data.isEdit ? "Edit Product" : "Add Product" }}
+</h2>
+<mat-dialog-content class="flex flex-col p-2 md:p-4 xl:p-6">
+  <form [formGroup]="productForm">
+    <mat-form-field class="w-full">
+      <mat-label>Title</mat-label>
+      <input
+        matInput
+        placeholder="Title of the Book"
+        formControlName="title"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Author</mat-label>
+      <input
+        matInput
+        placeholder="Author of the Book"
+        formControlName="author"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Genre</mat-label>
+      <input
+        matInput
+        placeholder="Genre of the Book"
+        formControlName="genre"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Price</mat-label>
+      <input
+        matInput
+        type="number"
+        placeholder="Price of the Book"
+        formControlName="price"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>CoverUrl</mat-label>
+      <input
+        matInput
+        placeholder="CoverUrl of the Book"
+        formControlName="coverUrl"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        placeholder="Description of the Book"
+        rows="5"
+        formControlName="description"
+        required
+      ></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions *ngIf="data" align="center">
+  <button mat-flat-button color="warn" (click)="onCancel()">Cancel</button>
+  <button
+    mat-flat-button
+    color="accent"
+    (click)="onSave()"
+    cdkFocusInitial
+    [disabled]="!productForm.valid"
+  >
+    {{ data.isEdit ? "Save" : "Add" }}
+  </button>
+</mat-dialog-actions>
