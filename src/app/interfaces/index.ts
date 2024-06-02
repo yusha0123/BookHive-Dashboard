@@ -18,3 +18,27 @@ export interface Product {
   author: string;
   genre: string;
 }
+
+interface Access {
+  manageGroupMembership: boolean;
+  view: boolean;
+  mapRoles: boolean;
+  impersonate: boolean;
+  manage: boolean;
+}
+
+export interface User {
+  id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  emailVerified: boolean;
+  createdTimestamp: number;
+  enabled: boolean;
+  totp: boolean;
+  disableableCredentialTypes: string[];
+  requiredActions: string[];
+  notBefore: number;
+  access: Access;
+}

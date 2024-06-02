@@ -9,10 +9,10 @@ import {
   catchError,
   throwError,
 } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 import { Product } from '../interfaces';
 import { API_URL } from '../constants';
 import { extractErrorMessage } from '../helpers';
-import { ToastrService } from 'ngx-toastr';
 
 interface DeleteReponse {
   success: boolean;
@@ -35,14 +35,15 @@ export class ProductService {
 
   getProducts(): Observable<Product[]> {
     this.ngxLoader.start();
-    return this.http
-      .get<Product[]>(`${API_URL}/books`)
-      .pipe(finalize(() => this.ngxLoader.stop()));
+    return this.http.get<Product[]>(`${API_URL}/books`).pipe(
+      catchError(this.handleError.bind(this)),
+      finalize(() => this.ngxLoader.stop())
+    );
   }
 
   createProduct(product: Product): Observable<Product> {
     this.ngxLoader.start();
-    return this.http.post<Product>(`${API_URL}/admin/books`, product).pipe(
+    return this.http.post<Product>(`${API_URL}/books`, product).pipe(
       tap(() => this.refreshProductsSubject.next()),
       catchError(this.handleError.bind(this)),
       finalize(() => this.ngxLoader.stop())
@@ -52,7 +53,7 @@ export class ProductService {
   updateProduct(product: Product): Observable<Product> {
     this.ngxLoader.start();
     return this.http
-      .put<Product>(`${API_URL}/admin/books/${product._id}`, product)
+      .put<Product>(`${API_URL}/books/${product._id}`, product)
       .pipe(
         tap(() => this.refreshProductsSubject.next()),
         catchError(this.handleError.bind(this)),
@@ -63,7 +64,7 @@ export class ProductService {
   deleteProduct(product: Product): Observable<DeleteReponse> {
     this.ngxLoader.start();
     return this.http
-      .put<DeleteReponse>(`${API_URL}/admin/books/${product._id}`, product)
+      .put<DeleteReponse>(`${API_URL}/books/${product._id}`, product)
       .pipe(
         tap(() => this.refreshProductsSubject.next()),
         catchError(this.handleError.bind(this)),

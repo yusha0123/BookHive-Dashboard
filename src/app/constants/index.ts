@@ -12,7 +12,7 @@ export const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsColor: 'blue',
   fgsPosition: 'center-center',
   fgsSize: 60,
-  fgsType: 'ball-spin-clockwise',
+  fgsType: 'circle',
   gap: 24,
   logoPosition: 'center-center',
   masterLoaderId: 'master',
@@ -26,4 +26,4 @@ export const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   minTime: 300,
 };
 
-export const API_URL = 'http://localhost:3000/api';
+export const API_URL = 'http://localhost:3000/api/admin';

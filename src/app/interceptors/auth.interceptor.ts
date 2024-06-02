@@ -11,6 +11,12 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../services/auth.service';
 
+interface Token {
+  access_token: string;
+  refresh_token: string;
+  username: string;
+}
+
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
@@ -23,20 +29,26 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const token = localStorage.getItem('user');
-    const isLoginRoute = this.router.url === '/login';
+    const userString = localStorage.getItem('user');
+    const user = userString ? (JSON.parse(userString) as Token) : null;
 
-    if (!isLoginRoute && token) {
+    if (user && user.access_token && this.router.url !== '/login') {
       request = request.clone({
-        headers: request.headers.set('Authorization', `Bearer ${token}`),
+        headers: request.headers.set(
+          'Authorization',
+          `Bearer ${user.access_token}`
+        ),
       });
     }
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if ((error.status === 401 || error.status === 403) && !isLoginRoute) {
+        if (
+          (error.status === 401 || error.status === 403) &&
+          this.router.url !== '/login'
+        ) {
           this.authService.logout();
-          this.toastr.error('UnAuthorized Access', 'Please login again!');
+          this.toastr.error('Unauthorised Access', 'Please login again!');
         }
         return throwError(() => error);
       })

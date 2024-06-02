@@ -43,17 +43,15 @@ export class AuthService {
     password: string;
   }): Observable<LoginResponse> {
     this.ngxLoader.start();
-    return this.httpClient
-      .post<LoginResponse>(`${API_URL}/admin/login`, user)
-      .pipe(
-        tap((response) => this.handleSuccess(user.username, response)),
-        catchError((error) => {
-          const errorMessage = extractErrorMessage(error);
-          this.toastr.error(errorMessage);
-          return throwError(() => new Error(error));
-        }),
-        finalize(() => this.ngxLoader.stop())
-      );
+    return this.httpClient.post<LoginResponse>(`${API_URL}/login`, user).pipe(
+      tap((response) => this.handleSuccess(user.username, response)),
+      catchError((error) => {
+        const errorMessage = extractErrorMessage(error);
+        this.toastr.error(errorMessage);
+        return throwError(() => new Error(error));
+      }),
+      finalize(() => this.ngxLoader.stop())
+    );
   }
 
   private handleSuccess(username: string, response: LoginResponse) {
