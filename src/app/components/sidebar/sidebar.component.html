@@ -5,14 +5,14 @@
   </div>
   <div class="flex-1 px-3">
     <ng-container *ngFor="let link of navLinks">
-      <button
+      <a
         [routerLink]="link.route"
         class="nav-item"
         [ngClass]="{ '!bg-indigo-500 !text-white': isLinkActive(link.route) }"
       >
         <fa-icon [icon]="link.icon" />
         {{ link.label }}
-      </button>
+      </a>
     </ng-container>
     <button class="nav-item" (click)="logout()">
       <fa-icon [icon]="faArrowRightFromBracket"></fa-icon>

@@ -1,39 +1,49 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
-import { LayoutComponent } from './layout/layout.component';
-import { RootComponent } from './pages/root/root.component';
-import { UsersComponent } from './pages/users/users.component';
-import { ProductsComponent } from './pages/products/products.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { isAuthenticated } from './guards/isAuthenticated.guard';
-import { unAuthenticated } from './guards/unAuthenticated.guard';
+import { LayoutComponent } from './layout/layout.component';
 
 const routes: Routes = [
   {
     path: 'login',
     title: 'Admin-Login',
-    canActivate: [unAuthenticated],
-    component: LoginComponent,
+    loadChildren: () =>
+      import('./features/login/login.module').then((m) => m.LoginModule),
   },
   {
     path: '',
     component: LayoutComponent,
     canActivate: [isAuthenticated],
     children: [
-      { path: '', component: RootComponent, title: 'BookHive-Dashboard' },
-      { path: 'users', component: UsersComponent, title: 'BookHive-Users' },
+      {
+        path: '',
+        title: 'BookHive-Dashboard',
+        loadChildren: () =>
+          import('./features/root/root.module').then((m) => m.RootModule),
+      },
+      {
+        path: 'users',
+        title: 'BookHive-Users',
+        loadChildren: () =>
+          import('./features/users/users.module').then((m) => m.UsersModule),
+      },
       {
         path: 'products',
-        component: ProductsComponent,
         title: 'BookHive-Products',
+        loadChildren: () =>
+          import('./features/products/products.module').then(
+            (m) => m.ProductsModule
+          ),
       },
     ],
   },
   {
     path: '**',
     title: 'Page Not Found',
-    component: NotFoundComponent,
+    loadChildren: () =>
+      import('./features/not-found/not-found.module').then(
+        (m) => m.NotFoundModule
+      ),
   },
 ];
 
