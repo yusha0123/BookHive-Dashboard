@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -12,8 +12,8 @@ import {
   throwError,
 } from 'rxjs';
 import { API_URL } from '../constants';
-import { LoginResponse } from '../interfaces';
 import { extractErrorMessage } from '../helpers';
+import { LoginResponse } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
